@@ -1,8 +1,10 @@
 import { toInteger, isNumber } from '../../utils/utils';
+import { Subject } from 'rxjs';
 
 export class Time {
   private hour = '';
   private minute = '';
+  valueChange = new Subject<string>();
 
   get value(): string {
     return this.hour && this.minute
@@ -48,7 +50,10 @@ export class Time {
       this.hour = '';
       this.minute = '';
     }
+    this.valueChange.next(this.value);
   }
+
+
 
   /* Returns the time unit value as a double digit if below
    * provided maxValue

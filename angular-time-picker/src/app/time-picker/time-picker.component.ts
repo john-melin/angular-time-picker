@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, ChangeDetectorRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { take } from 'rxjs/operators';
 
@@ -13,9 +13,6 @@ import { WheelBlockComponent } from './wheel-block/wheel-block.component';
 export class TimePickerComponent implements AfterViewInit {
   readonly mask = [/[0-2]/, /\d/, ':', /[0-5]/, /\d/];
 
-  @Input() max: string;
-  @Input() min: string;
-
   @Input()
   set value(val: string) {
     this.model.updateTime(val);
@@ -23,6 +20,8 @@ export class TimePickerComponent implements AfterViewInit {
   get value(): string {
     return this.model.value;
   }
+
+  @Output() timeSet = new EventEmitter<string>();
 
   @ViewChild(WheelBlockComponent) wheelBlock: WheelBlockComponent;
   @ViewChild(CdkConnectedOverlay) overlayDir: CdkConnectedOverlay;
@@ -47,6 +46,7 @@ export class TimePickerComponent implements AfterViewInit {
   constructor(private changeDetector: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
+    this.model.valueChange.subscribe(newTime => this.timeSet.emit(newTime));
     this.changeDetector.detectChanges();
   }
 
