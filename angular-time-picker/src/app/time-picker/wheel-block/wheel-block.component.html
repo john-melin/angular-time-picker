@@ -5,6 +5,7 @@
       timeUnitType="{{TimeUnit.HOUR}}"
       [model]="model"
       [digits]="hours"
+      (enter)="enter.emit()"
     ></app-time-wheel>
     <div class="border"></div>
     <app-time-wheel
@@ -12,6 +13,7 @@
       timeUnitType="{{TimeUnit.MINUTE}}"
       [model]="model"
       [digits]="minutes"
+      (enter)="enter.emit()"
     ></app-time-wheel>
   </div>
 </div>

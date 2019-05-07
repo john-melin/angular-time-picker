@@ -4,8 +4,9 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { TimePickerComponent } from './time-picker.component';
-import { WheelBlockModule } from './wheel-block/wheel-block.module';
 import { WheelBlockComponent } from './wheel-block/wheel-block.component';
+
+import { WheelBlockModule } from './wheel-block/wheel-block.module';
 
 @NgModule({
    declarations: [ TimePickerComponent ],

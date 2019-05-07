@@ -1,5 +1,5 @@
-<div #overlayOrigin="cdkOverlayOrigin" cdkOverlayOrigin class="time-picker-wrapper">
-  <div class="time-picker-flex">
+<div class="time-picker-wrapper">
+  <div class="time-picker-flex" #overlayOrigin="cdkOverlayOrigin" cdk-overlay-origin >
     <div class="time-picker-infix">
       <span class="time-picker-placeholder" [class.focused]="isFocused" [class.should-float]="shouldLabelFloat">Kl.</span>
       <input
@@ -14,7 +14,7 @@
         (input)="setTime($event.target.value)"
       >
     </div>
-    <div class="time-picker-icon" src="access_time.svg" (click)="toggleOverlay()"></div>
+    <div class="time-picker-icon" src="access_time.svg" (click)="toggleOverlay()" ></div>
   </div>
 
   <div class="time-picker-underline">
@@ -26,10 +26,17 @@
 
 <ng-template
   cdkConnectedOverlay
+  cdkConnectedOverlayLockPosition
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
   [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayOffsetY]="-20"
   [cdkConnectedOverlayOpen]="isOpen"
+  (backdropClick)="close()"
   (attach)="scrollDigitWheels()"
+  (detach)="close()"
 >
-  <app-wheel-block [model]="model"></app-wheel-block>
+  <app-wheel-block [model]="model" (enter)="close()"></app-wheel-block>
 </ng-template>
 

@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 
 import { TimeUnit, Time } from '../models';
 import { TimeWheelComponent } from './time-wheel/time-wheel.component';
@@ -13,6 +13,8 @@ export class WheelBlockComponent {
   readonly TimeUnit = TimeUnit;
 
   @Input() model: Time;
+
+  @Output() enter = new EventEmitter();
 
   @ViewChild('hourWheel') hourWheel: TimeWheelComponent;
   @ViewChild('minuteWheel') minuteWheel: TimeWheelComponent;

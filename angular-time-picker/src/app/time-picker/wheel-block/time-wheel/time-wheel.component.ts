@@ -7,11 +7,13 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 
 import { toInteger } from '../../utils/utils';
 import { TimeWheelOptionComponent } from './time-wheel-option/time-wheel-option.component';
-import { TimeUnit, ARROW_UP, Time, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT } from '../../models';
+import { TimeUnit, ARROW_UP, Time, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT, ENTER } from '../../models';
 
 @Component({
   selector: 'app-time-wheel',
@@ -25,6 +27,8 @@ export class TimeWheelComponent implements AfterViewInit {
   @Input() timeUnitType: TimeUnit;
   @Input() model: Time;
   @Input() digits: string[];
+
+  @Output() enter = new EventEmitter();
 
   @ViewChild('digitList') digitList: ElementRef;
   @ViewChildren(TimeWheelOptionComponent) digitListItems: QueryList<TimeWheelOptionComponent>;
@@ -48,6 +52,8 @@ export class TimeWheelComponent implements AfterViewInit {
       this.keyManager.onKeydown(keyEvent);
     } else if (keyEvent.key === ARROW_LEFT || keyEvent.key === ARROW_RIGHT) {
       this.focusOnSibling();
+    } else if (keyEvent.key === ENTER) {
+      this.enter.emit();
     }
   }
 
