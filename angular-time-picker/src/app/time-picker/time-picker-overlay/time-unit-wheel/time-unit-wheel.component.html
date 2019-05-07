@@ -1,0 +1,14 @@
+<ul
+  #digitList
+  class="{{timeUnitType}}"
+  tabIndex="0"
+  (scroll)="onScroll($event.target.scrollTop)"
+  (keydown)="false"
+  (keyup)="keyManager.onKeydown($event)"
+>
+<!--Key down on focus change needs to be fixed-->
+  <app-time-unit-wheel-option
+    *ngFor="let digit of digits"
+    [label]="digit"
+  ></app-time-unit-wheel-option>
+</ul>

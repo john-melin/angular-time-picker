@@ -1,0 +1,34 @@
+<div #overlayOrigin="cdkOverlayOrigin" cdkOverlayOrigin class="time-picker-wrapper">
+  <div class="time-picker-flex">
+    <div class="time-picker-infix">
+      <span class="time-picker-placeholder" [class.should-float]="shouldLabelFloat">Kl.</span>
+      <input
+        #timePickerField
+        type="text"
+        pattern="\d{2}:\d{2}"
+        value="{{model.value}}"
+        [textMask]="{mask: mask}"
+        (focus)="isFocused = true"
+        (focusout)="isFocused = false"
+        (blur)="fillEmptyTime()"
+        (input)="setTime($event.target.value)"
+      >
+    </div>
+    <div class="time-picker-icon" src="access_time.svg" (click)="toggleOverlay()"></div>
+  </div>
+
+  <div class="time-picker-underline">
+    <span class="time-picker-ripple" [class.focused]="isFocused"></span>
+  </div>
+
+  <div class="time-picker-subscript-wrapper"></div>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="overlayOrigin"
+  [cdkConnectedOverlayOpen]="isOpen"
+>
+  <app-time-picker-overlay [model]="model"></app-time-picker-overlay>
+</ng-template>
+

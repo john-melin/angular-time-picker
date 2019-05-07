@@ -1,0 +1,13 @@
+// Digit
+li {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.5em;
+
+  scroll-snap-align: center;
+
+  &.active {
+    font-weight: bold;
+  }
+}

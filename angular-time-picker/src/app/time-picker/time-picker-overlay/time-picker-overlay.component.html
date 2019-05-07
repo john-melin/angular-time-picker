@@ -1,0 +1,15 @@
+<div class="time-picker-wrapper">
+  <div class="time-picker-block" cdkTrapFocus>
+    <app-time-unit-wheel
+      timeUnitType="{{TimeUnit.HOUR}}"
+      [model]="model"
+      [digits]="hours"
+    ></app-time-unit-wheel>
+
+    <app-time-unit-wheel
+      timeUnitType="{{TimeUnit.MINUTE}}"
+      [model]="model"
+      [digits]="minutes"
+    ></app-time-unit-wheel>
+  </div>
+</div>
