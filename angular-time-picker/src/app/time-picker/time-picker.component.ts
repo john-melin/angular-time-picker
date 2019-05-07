@@ -1,9 +1,9 @@
-import { Component, ViewChild, ElementRef, Input, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 import { take } from 'rxjs/operators';
 
-import { TimePickerOverlayComponent } from './time-picker-overlay/time-picker-overlay.component';
 import { Time } from './models';
+import { WheelBlockComponent } from './wheel-block/wheel-block.component';
 
 @Component({
   selector: 'app-time-picker',
@@ -24,7 +24,7 @@ export class TimePickerComponent implements AfterViewInit {
     return this.model.value;
   }
 
-  @ViewChild(TimePickerOverlayComponent) wheelBlock: TimePickerOverlayComponent;
+  @ViewChild(WheelBlockComponent) wheelBlock: WheelBlockComponent;
   @ViewChild(CdkConnectedOverlay) overlayDir: CdkConnectedOverlay;
 
   @ViewChild('timePickerField') timePickerField: ElementRef;

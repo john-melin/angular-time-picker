@@ -10,15 +10,15 @@ import {
 } from '@angular/core';
 
 import { toInteger } from '../../utils/utils';
-import { TimeUnitWheelOptionComponent } from './time-unit-wheel-option/time-unit-wheel-option.component';
+import { TimeWheelOptionComponent } from './time-wheel-option/time-wheel-option.component';
 import { TimeUnit, ARROW_UP, Time, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT } from '../../models';
 
 @Component({
-  selector: 'app-time-unit-wheel',
-  templateUrl: './time-unit-wheel.component.html',
-  styleUrls: ['./time-unit-wheel.component.scss'],
+  selector: 'app-time-wheel',
+  templateUrl: './time-wheel.component.html',
+  styleUrls: ['./time-wheel.component.scss'],
 })
-export class TimeUnitWheelComponent implements AfterViewInit {
+export class TimeWheelComponent implements AfterViewInit {
   readonly StartOffsetIndex = 3;
   readonly itemHeight = 40;
 
@@ -27,10 +27,10 @@ export class TimeUnitWheelComponent implements AfterViewInit {
   @Input() digits: string[];
 
   @ViewChild('digitList') digitList: ElementRef;
-  @ViewChildren(TimeUnitWheelOptionComponent) digitListItems: QueryList<TimeUnitWheelOptionComponent>;
+  @ViewChildren(TimeWheelOptionComponent) digitListItems: QueryList<TimeWheelOptionComponent>;
 
   listPositionOffset = 0;
-  keyManager: ActiveDescendantKeyManager<TimeUnitWheelOptionComponent>;
+  keyManager: ActiveDescendantKeyManager<TimeWheelOptionComponent>;
 
   ngAfterViewInit() {
     this.initKeyManager();
@@ -57,7 +57,7 @@ export class TimeUnitWheelComponent implements AfterViewInit {
   }
 
   private initKeyManager() {
-    this.keyManager = new ActiveDescendantKeyManager<TimeUnitWheelOptionComponent>(this.digitListItems)
+    this.keyManager = new ActiveDescendantKeyManager<TimeWheelOptionComponent>(this.digitListItems)
       .skipPredicate(item => item.disabled)
       .withAllowedModifierKeys(['shiftKey']);
 

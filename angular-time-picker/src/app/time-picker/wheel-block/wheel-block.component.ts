@@ -1,21 +1,21 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, Input, ViewChild } from '@angular/core';
 
-import { TimeUnitWheelComponent } from './time-unit-wheel/time-unit-wheel.component';
 import { TimeUnit, Time } from '../models';
+import { TimeWheelComponent } from './time-wheel/time-wheel.component';
 
 @Component({
-  selector: 'app-time-picker-overlay',
-  templateUrl: './time-picker-overlay.component.html',
-  styleUrls: ['./time-picker-overlay.component.scss'],
+  selector: 'app-wheel-block',
+  templateUrl: './wheel-block.component.html',
+  styleUrls: ['./wheel-block.component.scss'],
 })
-export class TimePickerOverlayComponent {
+export class WheelBlockComponent {
   readonly TimeUnit = TimeUnit;
 
   @Input() model: Time;
 
-  @ViewChild('hourWheel') hourWheel: TimeUnitWheelComponent;
-  @ViewChild('minuteWheel') minuteWheel: TimeUnitWheelComponent;
+  @ViewChild('hourWheel') hourWheel: TimeWheelComponent;
+  @ViewChild('minuteWheel') minuteWheel: TimeWheelComponent;
 
   hours: string[];
   minutes: string[];

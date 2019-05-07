@@ -1,17 +1,17 @@
 <div class="time-picker-wrapper">
   <div class="time-picker-block">
-    <app-time-unit-wheel
+    <app-time-wheel
       #hourWheel
       timeUnitType="{{TimeUnit.HOUR}}"
       [model]="model"
       [digits]="hours"
-    ></app-time-unit-wheel>
+    ></app-time-wheel>
     <div class="border"></div>
-    <app-time-unit-wheel
+    <app-time-wheel
       #minuteWheel
       timeUnitType="{{TimeUnit.MINUTE}}"
       [model]="model"
       [digits]="minutes"
-    ></app-time-unit-wheel>
+    ></app-time-wheel>
   </div>
 </div>

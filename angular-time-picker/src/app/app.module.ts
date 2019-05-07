@@ -1,32 +1,28 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BrowserModule } from '@angular/platform-browser';
+import { DecimalPipe, CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppComponent } from './app.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
-import { TimePickerOverlayComponent } from './time-picker/time-picker-overlay/time-picker-overlay.component';
-import { TimeUnitWheelComponent } from './time-picker/time-picker-overlay/time-unit-wheel/time-unit-wheel.component';
-import { TimeUnitWheelOptionComponent } from './time-picker/time-picker-overlay/time-unit-wheel/time-unit-wheel-option/time-unit-wheel-option.component';
+import { WheelBlockModule } from './time-picker/wheel-block/wheel-block.module';
+import { WheelBlockComponent } from './time-picker/wheel-block/wheel-block.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      TimeUnitWheelOptionComponent,
-      TimeUnitWheelComponent,
-      TimePickerOverlayComponent,
       TimePickerComponent
    ],
    imports: [
+      CommonModule,
       BrowserModule,
       OverlayModule,
-      ScrollingModule,
-      TextMaskModule
+      TextMaskModule,
+      WheelBlockModule,
    ],
    providers: [ DecimalPipe ],
-   entryComponents: [ TimePickerOverlayComponent ],
+   entryComponents: [ WheelBlockComponent ],
    bootstrap: [ AppComponent ]
 })
 export class AppModule { }
