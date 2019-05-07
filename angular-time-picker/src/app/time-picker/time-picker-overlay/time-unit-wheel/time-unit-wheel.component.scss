@@ -1,9 +1,14 @@
+@import 'variables';
+
 :host {
   display: block;
   flex: 1;
+
+  &:focus {
+    outline: none;
+  }
 }
 
-// Digit wheel
 ul {
   display: block;
   position: relative;
@@ -11,23 +16,28 @@ ul {
   flex: 1;
   text-align: center;
 
-  border: 1px solid #dfdfdf;
   margin: 0;
   padding: 0;
   z-index: 1;
-
   list-style: none inside;
+
   overflow-y: scroll;
-  
   scroll-snap-type: y mandatory;
   // Older browser support
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(40px);
 }
 
+ul:focus {
+  outline-offset: -1px;
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: $secondary-color;
+}
+
 // Remove scrollbar
 ul::-webkit-scrollbar {
-  width: 0 !important;
+  width: 0 !important;  
   overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
 }

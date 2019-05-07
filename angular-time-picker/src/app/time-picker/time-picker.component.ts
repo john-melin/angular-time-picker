@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, Input, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { CdkConnectedOverlay } from '@angular/cdk/overlay';
-
 import { take } from 'rxjs/operators';
+
 import { TimePickerOverlayComponent } from './time-picker-overlay/time-picker-overlay.component';
 import { Time } from './models';
 

@@ -1,23 +1,23 @@
+@import 'variables';
+
 .time-picker-wrapper {
   display: block;
 
-  width: 100%;
-  height: auto;
+  width: 150px;
 
   z-index: 3;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 
+    0 4px 5px 0 rgba(0,0,0,.14), 
+    0 1px 10px 0 rgba(0,0,0,.12);
 }
 
 // Block containing both wheels
 .time-picker-block {
   display: flex;
   position: relative;
-  height: 280px;
-  width: 150px;
 
   flex-shrink: 0;
   flex-flow: row nowrap;
-
-  background-color: #f2f2f2;
 }
 
 // Colored digit picker bar
@@ -31,11 +31,16 @@
   left: 0;
   z-index: 0;
 
-  background-color: rgba(208, 145, 45, 0.5);
+  background-color: $primary-color;
   
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
 
   pointer-events: none;
   content: "";
+}
+
+.border {
+  width: 1px;
+  background: $divider-color;
 }

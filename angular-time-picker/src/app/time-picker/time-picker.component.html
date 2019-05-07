@@ -1,7 +1,7 @@
 <div #overlayOrigin="cdkOverlayOrigin" cdkOverlayOrigin class="time-picker-wrapper">
   <div class="time-picker-flex">
     <div class="time-picker-infix">
-      <span class="time-picker-placeholder" [class.should-float]="shouldLabelFloat">Kl.</span>
+      <span class="time-picker-placeholder" [class.focused]="isFocused" [class.should-float]="shouldLabelFloat">Kl.</span>
       <input
         #timePickerField
         type="text"

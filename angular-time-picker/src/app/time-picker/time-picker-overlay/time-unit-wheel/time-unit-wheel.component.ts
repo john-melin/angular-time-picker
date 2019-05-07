@@ -6,8 +6,6 @@ import {
   ViewChildren,
   ViewChild,
   ElementRef,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
   AfterViewInit,
 } from '@angular/core';
 
@@ -19,7 +17,6 @@ import { TimeUnit, ARROW_UP, Time, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT } from '.
   selector: 'app-time-unit-wheel',
   templateUrl: './time-unit-wheel.component.html',
   styleUrls: ['./time-unit-wheel.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimeUnitWheelComponent implements AfterViewInit {
   readonly StartOffsetIndex = 3;
@@ -32,7 +29,6 @@ export class TimeUnitWheelComponent implements AfterViewInit {
   @ViewChild('digitList') digitList: ElementRef;
   @ViewChildren(TimeUnitWheelOptionComponent) digitListItems: QueryList<TimeUnitWheelOptionComponent>;
 
-  tabIndex = 0;
   listPositionOffset = 0;
   keyManager: ActiveDescendantKeyManager<TimeUnitWheelOptionComponent>;
 
@@ -40,8 +36,6 @@ export class TimeUnitWheelComponent implements AfterViewInit {
     this.initKeyManager();
     this.setInitSelectedItem();
     this.scrollActiveOptionIntoView();
-    this.tabIndex = this.timeUnitType === TimeUnit.HOUR ? 0 : 1;
-   // this.changeDetector.detectChanges();
   }
 
   onScroll(scrollOffset: number) {
@@ -53,7 +47,7 @@ export class TimeUnitWheelComponent implements AfterViewInit {
     if (keyEvent.key === ARROW_UP || keyEvent.key === ARROW_DOWN) {
       this.keyManager.onKeydown(keyEvent);
     } else if (keyEvent.key === ARROW_LEFT || keyEvent.key === ARROW_RIGHT) {
-
+      this.focusOnSibling();
     }
   }
 
@@ -64,7 +58,8 @@ export class TimeUnitWheelComponent implements AfterViewInit {
 
   private initKeyManager() {
     this.keyManager = new ActiveDescendantKeyManager<TimeUnitWheelOptionComponent>(this.digitListItems)
-      .skipPredicate(item => item.disabled);
+      .skipPredicate(item => item.disabled)
+      .withAllowedModifierKeys(['shiftKey']);
 
     this.keyManager.change.subscribe(() => this.updateTimeModel());
   }
@@ -127,5 +122,12 @@ export class TimeUnitWheelComponent implements AfterViewInit {
     } else {
       return index;
     }
+  }
+
+  private focusOnSibling() {
+    const sibling = this.timeUnitType === TimeUnit.HOUR
+      ? TimeUnit.MINUTE
+      : TimeUnit.HOUR;
+    (document.querySelector(`.${sibling}`) as HTMLElement).focus();
   }
 }
