@@ -1,4 +1,4 @@
-import { isNumber, toInteger } from '../utils/utils';
+import { toInteger, isNumber } from '../../utils/utils';
 
 export class Time {
   private hour = '';

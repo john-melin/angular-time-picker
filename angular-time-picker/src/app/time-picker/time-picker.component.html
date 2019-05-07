@@ -28,6 +28,7 @@
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="overlayOrigin"
   [cdkConnectedOverlayOpen]="isOpen"
+  (attach)="scrollDigitWheels()"
 >
   <app-time-picker-overlay [model]="model"></app-time-picker-overlay>
 </ng-template>

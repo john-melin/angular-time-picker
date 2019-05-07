@@ -1,8 +1,8 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
-import { Time } from '../time/time';
-import { TimeUnit } from './time-unit';
+import { TimeUnitWheelComponent } from './time-unit-wheel/time-unit-wheel.component';
+import { TimeUnit, Time } from '../models';
 
 @Component({
   selector: 'app-time-picker-overlay',
@@ -11,7 +11,11 @@ import { TimeUnit } from './time-unit';
 })
 export class TimePickerOverlayComponent {
   readonly TimeUnit = TimeUnit;
+
   @Input() model: Time;
+
+  @ViewChild('hourWheel') hourWheel: TimeUnitWheelComponent;
+  @ViewChild('minuteWheel') minuteWheel: TimeUnitWheelComponent;
 
   hours: string[];
   minutes: string[];
@@ -19,6 +23,11 @@ export class TimePickerOverlayComponent {
   constructor(private numberPipe: DecimalPipe) {
     this.hours = this.getIntervalNumberStrings(24);
     this.minutes = this.getIntervalNumberStrings(60);
+  }
+
+  scrollDigitWheels() {
+    this.hourWheel.scrollActiveOptionIntoView();
+    this.minuteWheel.scrollActiveOptionIntoView();
   }
 
   private getIntervalNumberStrings(to: number): string[] {

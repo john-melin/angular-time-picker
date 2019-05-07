@@ -1,10 +1,11 @@
 <ul
   #digitList
+  tabIndex="{{tabIndex}}"
   class="{{timeUnitType}}"
-  tabIndex="0"
+  [scrollTop]="listPositionOffset"
   (scroll)="onScroll($event.target.scrollTop)"
   (keydown)="false"
-  (keyup)="keyManager.onKeydown($event)"
+  (keyup)="onKeyDown($event)"
 >
 <!--Key down on focus change needs to be fixed-->
   <app-time-unit-wheel-option

@@ -9,13 +9,11 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   AfterViewInit,
-  AfterContentInit,
 } from '@angular/core';
 
-import { TimeUnit } from '../time-unit';
-import { Time } from '../../time/time';
 import { toInteger } from '../../utils/utils';
 import { TimeUnitWheelOptionComponent } from './time-unit-wheel-option/time-unit-wheel-option.component';
+import { TimeUnit, ARROW_UP, Time, ARROW_DOWN, ARROW_LEFT, ARROW_RIGHT } from '../../models';
 
 @Component({
   selector: 'app-time-unit-wheel',
@@ -23,7 +21,7 @@ import { TimeUnitWheelOptionComponent } from './time-unit-wheel-option/time-unit
   styleUrls: ['./time-unit-wheel.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimeUnitWheelComponent implements AfterContentInit, AfterViewInit {
+export class TimeUnitWheelComponent implements AfterViewInit {
   readonly StartOffsetIndex = 3;
   readonly itemHeight = 40;
 
@@ -34,37 +32,34 @@ export class TimeUnitWheelComponent implements AfterContentInit, AfterViewInit {
   @ViewChild('digitList') digitList: ElementRef;
   @ViewChildren(TimeUnitWheelOptionComponent) digitListItems: QueryList<TimeUnitWheelOptionComponent>;
 
+  tabIndex = 0;
   listPositionOffset = 0;
   keyManager: ActiveDescendantKeyManager<TimeUnitWheelOptionComponent>;
 
-  constructor() { }
-
-  ngAfterContentInit() {
-    console.log(this.digitList.nativeElement.scrollTop)
-
-    setTimeout(() => {
-      this.digitList.nativeElement.scrollTop = 300;
-      console.log(this.digitList.nativeElement.scrollTop)
-      console.log(this.digitList)
-    }, 40);
-  }
-
-  ngAfterViewInit(): void {
-    // const index = this.getIndexFromScrollTopOffset(300);
-
-
-   // this.changeDetector.detectChanges();
-    /*
+  ngAfterViewInit() {
     this.initKeyManager();
     this.setInitSelectedItem();
     this.scrollActiveOptionIntoView();
-*/
+    this.tabIndex = this.timeUnitType === TimeUnit.HOUR ? 0 : 1;
    // this.changeDetector.detectChanges();
   }
 
   onScroll(scrollOffset: number) {
     const index = this.getIndexFromScrollTopOffset(scrollOffset);
-    //this.keyManager.setActiveItem(index);
+    this.keyManager.setActiveItem(index);
+  }
+
+  onKeyDown(keyEvent: KeyboardEvent) {
+    if (keyEvent.key === ARROW_UP || keyEvent.key === ARROW_DOWN) {
+      this.keyManager.onKeydown(keyEvent);
+    } else if (keyEvent.key === ARROW_LEFT || keyEvent.key === ARROW_RIGHT) {
+
+    }
+  }
+
+  scrollActiveOptionIntoView() {
+    const selectedIndex = this.keyManager.activeItemIndex || 0;
+    this.listPositionOffset = this.getScrollTopOffsetFromIndex(selectedIndex);
   }
 
   private initKeyManager() {
@@ -93,19 +88,11 @@ export class TimeUnitWheelComponent implements AfterContentInit, AfterViewInit {
   }
 
   private setSelecedItemByValue(digitValue: string) {
-    const index = this.getListIndexFromValue(digitValue);
+    const index = this.getIndexFromValue(digitValue);
     this.keyManager.setActiveItem(index);
   }
 
-  // Cant get this to work on initiation
-  private scrollActiveOptionIntoView() {
-    const selectedIndex = this.keyManager.activeItemIndex || 0;
-    this.listPositionOffset = this.getScrollTopOffsetFromIndex(selectedIndex);
-
-   // this.changeDetector.detectChanges();
-  }
-
-  private getListIndexFromValue(timeValue: string): number {
+  private getIndexFromValue(timeValue: string): number {
     return this.StartOffsetIndex + toInteger(timeValue);
   }
 
@@ -113,6 +100,16 @@ export class TimeUnitWheelComponent implements AfterContentInit, AfterViewInit {
     return this.itemHeight * (index - this.StartOffsetIndex);
   }
 
+  /* Returns an index if the offset is within the snap threshold
+   *
+   * The snap threshold adds a small jumpy snap to the
+   * wheel in addition to css snap.
+   * It also updates the time model as the wheel scrolls
+   * past the digits. Without this the wheel will just
+   * updating when the wheel stops. This looks
+   * neat if the time picker input field is visible
+   * while the overlay with the wheels is open.
+   */
   private getIndexFromScrollTopOffset(offset: number): number {
     const index = (offset / this.itemHeight) + this.StartOffsetIndex;
     const indexDecimalPortion = index % 1;

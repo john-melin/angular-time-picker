@@ -89,15 +89,3 @@ input {
     transform: scaleX(1);
   }
 }
-
-// Is this used?
-.time-picker-subscript {
-  position: absolute;
-
-  font-size: 75%;
-  box-sizing: border-box;
-  width: 100%;
-  overflow: hidden;
-  top: calc(100% - 1.66666667em);
-  margin-top: .54166667em;
-}

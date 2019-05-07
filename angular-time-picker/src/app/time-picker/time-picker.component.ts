@@ -1,12 +1,14 @@
-import { Component, ViewChild, ElementRef, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 
-import { Time } from './time/time';
+import { take } from 'rxjs/operators';
+import { TimePickerOverlayComponent } from './time-picker-overlay/time-picker-overlay.component';
+import { Time } from './models';
 
 @Component({
   selector: 'app-time-picker',
   templateUrl: './time-picker.component.html',
   styleUrls: ['./time-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimePickerComponent implements AfterViewInit {
   readonly mask = [/[0-2]/, /\d/, ':', /[0-5]/, /\d/];
@@ -21,6 +23,9 @@ export class TimePickerComponent implements AfterViewInit {
   get value(): string {
     return this.model.value;
   }
+
+  @ViewChild(TimePickerOverlayComponent) wheelBlock: TimePickerOverlayComponent;
+  @ViewChild(CdkConnectedOverlay) overlayDir: CdkConnectedOverlay;
 
   @ViewChild('timePickerField') timePickerField: ElementRef;
   get timeInput(): HTMLInputElement {
@@ -58,6 +63,12 @@ export class TimePickerComponent implements AfterViewInit {
     if (!this.isEmpty) {
       this.model.fillEmptyTime();
     }
+  }
+
+  scrollDigitWheels() {
+    this.overlayDir.positionChange.pipe(take(1)).subscribe(() => {
+      this.wheelBlock.scrollDigitWheels();
+    });
   }
 }
 
